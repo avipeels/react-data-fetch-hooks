@@ -33,8 +33,7 @@ const App = () => {
   />
 
   const searchBox = <button
-    type="button"
-    onClick={() => setUrl(`http://hn.algolia.cddsdsom/api/v1/search?query=${query}`)}
+    type="submit"
   >Search</button>;
 
   const errorMessage = error && <div>Something went wrong ...</div>;
@@ -50,8 +49,15 @@ const App = () => {
 
   return (
     <>
-      {input}
-      {searchBox}
+      <form
+        onSubmit={(e) => {
+          setUrl(`http://hn.algolia.com/api/v1/search?query=${query}`)
+          e.preventDefault();
+        }}
+      >
+        {input}
+        {searchBox}
+      </form>
       {errorMessage}
       {loading ? loadingIndicator : hits}
     </>
