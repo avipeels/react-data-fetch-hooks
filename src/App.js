@@ -9,12 +9,18 @@ const App = () => {
     'https://hn.algolia.com/api/v1/search?query=redux',
   );
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setError(false);
       setLoading(true);
-      const result = await axios.get(url)
-      setData(result.data);
+      try {
+        const result = await axios.get(url)
+        setData(result.data);
+      } catch (err) {
+        setError(err);
+      }
       setLoading(false);
     }
     fetchData();
@@ -28,10 +34,11 @@ const App = () => {
 
   const searchBox = <button
     type="button"
-    onClick={() => setUrl(`http://hn.algolia.com/api/v1/search?query=${query}`)}
-  >Search</button>
+    onClick={() => setUrl(`http://hn.algolia.cddsdsom/api/v1/search?query=${query}`)}
+  >Search</button>;
 
-  const loadingIndicator = <div>Loading...</div>
+  const errorMessage = error && <div>Something went wrong ...</div>;
+  const loadingIndicator = <div>Loading...</div>;
 
   const hits = <ul>
     {data.hits.map(hit => (
@@ -45,6 +52,7 @@ const App = () => {
     <>
       {input}
       {searchBox}
+      {errorMessage}
       {loading ? loadingIndicator : hits}
     </>
   )
