@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import UseCallBackParent from './Hooks/useCallbackDemo/UseCallBackParent';
 import useApi from './Hooks/useApi';
 import './App.css';
 
@@ -24,8 +25,8 @@ const App = () => {
   const loadingIndicator = <div>Loading...</div>;
 
   const hits = <ul>
-    {data.hits.map(hit => (
-      <li key={hit.objectId}>
+    {data.hits.map((hit,index) => (
+      <li key={`${index}hit`}>
         <a href={hit.url}>{hit.title}</a>
       </li>
     ))}
@@ -44,6 +45,8 @@ const App = () => {
       </form>
       {errorMessage}
       {loading ? loadingIndicator : hits}
+      <hr />
+      <UseCallBackParent />
     </>
   )
 }
